@@ -112,6 +112,14 @@ public class SubmenuEx extends JFrame {
 
             var ex = new SubmenuEx();
             ex.setVisible(true);
+
+            Question question = null;
+            try {
+                question = new Question(2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            question.toString();
         });
     }
 }

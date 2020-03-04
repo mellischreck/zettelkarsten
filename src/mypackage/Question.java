@@ -35,10 +35,10 @@ public class Question {
 
     public Question(int id) throws Exception {
         this.id = id;
-        readQuestion(id);
+        content = readQuestionContent(id);
     }
 
-    public void readQuestion(int id) throws Exception {
+    public String readQuestionContent(int id) throws Exception {
         try {
 
             Class.forName("com.mysql.jdbc.Driver");
@@ -53,6 +53,7 @@ public class Question {
             resultSet = preparedStatement.executeQuery();
             while ((resultSet.next())) {
                 content = resultSet.getString("content");
+
             }
 
 
@@ -61,8 +62,9 @@ public class Question {
         } finally {
             close();
         }
-
+        return content;
     }
+
 
     // You need to close the resultSet
     private void close() {
