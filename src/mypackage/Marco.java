@@ -8,4 +8,9 @@ public class Marco {
 
         // hello
     }
+
+    public static void main(String[] args) {
+        // code goes here
+    }
+
 }
