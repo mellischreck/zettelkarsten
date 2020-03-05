@@ -4,8 +4,12 @@ import java.util.ArrayList;
 
 public class Card {
 
+    private ArrayList<PotentialAnswer> pa;
+    private Question question;
+    private int id;
     private int learnBox_id;
     private String topic;
+
 
     public int getLearnBox_id() {
         return learnBox_id;
@@ -15,21 +19,41 @@ public class Card {
         return topic;
     }
 
-    public Card(int learnBox_id, String topic){
-        this.learnBox_id= learnBox_id;
-        this.topic= topic;
+    public int getId() {
+        return id;
     }
 
+    public Card() {
+
+    }
+
+    public Card(int id, int learnBox_id, String topic) {
+        this.id = id;
+        this.learnBox_id = learnBox_id;
+        this.topic = topic;
+    }
+
+    public Card(Card cardObject) {
+        this.id = cardObject.id;
+    }
+
+    public Card(int id) throws Exception {
+        this.id = id;
+    }
+
+    public void setPotentialAnswers(ArrayList<PotentialAnswer> al) {
+        pa = al;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
 
     public void loadCard(int id) throws Exception {
 
-
-
-
-
     }
 
-    private void readCard(){
+    private void readCard() {
 
     }
 
