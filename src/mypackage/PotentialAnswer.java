@@ -1,9 +1,13 @@
 package mypackage;
 
+import jdk.internal.net.http.common.Utils;
+
 import java.sql.*;
 import java.util.ArrayList;
 
-import static jdk.internal.net.http.common.Utils.close;
+import static jdk.internal.net.http.common.Utils.*;
+
+//import static jdk.internal.net.http.common.Utils.close;
 
 
 public class PotentialAnswer {
@@ -77,7 +81,7 @@ public class PotentialAnswer {
         } catch (Exception e) {
             throw e;
         } finally {
-            close();
+            Utils.close();
         }
     }
 }

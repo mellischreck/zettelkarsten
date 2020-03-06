@@ -113,6 +113,12 @@ public class SubmenuEx extends JFrame {
             var ex = new SubmenuEx();
             ex.setVisible(true);
 
+            try {
+                Card card = new Card(2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         });
     }
 }
