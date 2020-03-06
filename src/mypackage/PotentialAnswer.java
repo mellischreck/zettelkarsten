@@ -1,11 +1,13 @@
 package mypackage;
 
-import jdk.internal.net.http.common.Utils;
+import jdk.internal.net.http.common.Utils.*;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import static jdk.internal.net.http.common.Utils.*;
+import static jdk.internal.net.http.common.Utils.close;
+
+//import static jdk.internal.net.http.common.Utils.*;
 
 //import static jdk.internal.net.http.common.Utils.close;
 
@@ -81,8 +83,27 @@ public class PotentialAnswer {
         } catch (Exception e) {
             throw e;
         } finally {
-            Utils.close();
+            close();
         }
+    }
+    private static void close() {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+
+            if (statement != null) {
+                statement.close();
+            }
+
+            if (connect != null) {
+                connect.close();
+            }
+        } catch (Exception e) {
+
+
+        }
+
     }
 }
 
