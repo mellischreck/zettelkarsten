@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Card {
 
-    private ArrayList<PotentialAnswer> pa;
-    private Question question;
+    private static ArrayList<PotentialAnswer> pa;
+    private static Question questionObject;
     private int id;
     private int learnBox_id;
     private String topic;
@@ -23,9 +23,14 @@ public class Card {
         return id;
     }
 
-    public Card() {
+    /*public Card() {
 
     }
+
+    public Card(Card cardObject) {
+        this.id = cardObject.id;
+    }*/
+
 
     public Card(int id, int learnBox_id, String topic) {
         this.id = id;
@@ -33,26 +38,21 @@ public class Card {
         this.topic = topic;
     }
 
-
     public Card(int id) throws Exception {
         this.id = id;
 
-        //readQuestionContent(this.id);
+        Question.readQuestionContent(this.id);
 
-        //loadPotentialAnswersToCard(Card cardObject);
+        PotentialAnswer.loadPotentialAnswersToCard(this);
 
     }
 
-    public void setPotentialAnswers(ArrayList<PotentialAnswer> al) {
+    public static void setPotentialAnswers(ArrayList<PotentialAnswer> al) {
         pa = al;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
-    public Card(Card cardObject) {
-        this.id = cardObject.id;
+    public static void setQuestion(Question question) {
+        questionObject = question;
     }
 
 

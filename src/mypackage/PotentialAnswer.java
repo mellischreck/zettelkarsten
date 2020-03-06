@@ -10,7 +10,7 @@ public class PotentialAnswer {
     private static int id; // PK
     private static String content; // ein Antworttext zu einer Frage(Karte)
     private static boolean correct; // in db 1 für true
-    private static Card cardObject; // FK
+    private static int card_id; // FK
 
     private static Connection connect = null;
     private static Statement statement = null;
@@ -33,19 +33,19 @@ public class PotentialAnswer {
         return correct;
     }
 
-    public Card cardObject() {
-        return cardObject;
+    public int card_id() {
+        return card_id;
     }
 
-    public PotentialAnswer(int id) {
+    /*public PotentialAnswer(int id) {
 
-    }
+    }*/
 
-    public PotentialAnswer(int id, String content, boolean correct, Card cardObject) {
+    public PotentialAnswer(int id, String content, boolean correct, int card_id) {
         this.id = id;
         this.content = content;
         this.correct = correct;
-        this.cardObject = cardObject;
+        this.card_id = card_id;
     }
 
     /*
@@ -55,32 +55,24 @@ public class PotentialAnswer {
      *       cardObjekt.loadPotentialAnswers(al); soll dann einkommentiert werden
      */
 
-
     public static void loadPotentialAnswersToCard(Card cardObject) throws Exception {
         ArrayList<PotentialAnswer> al = new ArrayList<>();
         try {
-            // This will load the MySQL driver, each DB has its own driver
             Class.forName("com.mysql.jdbc.Driver");
-
-            // Setup the connection with the DB
             connect = DriverManager.
                     getConnection("jdbc:mysql://" + host + "/zettelkasten?" +
                             "user=" + user + "&password=" + passwd);
-
-            // Statements allow to issue SQL queries to the database
             statement = connect.createStatement();
-            // Result set get the result of the SQL query
             String dummy = "SELECT * FROM answer WHERE question_id=" + cardObject;
             resultSet = statement.executeQuery("SELECT * FROM answer WHERE question_id=" + cardObject.getId());
             while (resultSet.next()) {
                 id = resultSet.getInt("id");
                 content = resultSet.getString("content");
                 correct = resultSet.getBoolean("is_proper_answer");
-
-                //cardObject = resultSet.getInt("question_id");------------------------------------Lösung bitte
-                al.add(new PotentialAnswer(id, content, correct, cardObject));
+                card_id = resultSet.getInt("question_id");
+                al.add(new PotentialAnswer(id, content, correct, card_id));
             }
-            // cardObjekt.loadPotentialAnswers(al);
+            Card.setPotentialAnswers(al);
 
         } catch (Exception e) {
             throw e;
