@@ -23,9 +23,9 @@ public class PotentialAnswer {
     private static PreparedStatement preparedStatement = null;
     private static ResultSet resultSet = null;
 
-    final static private String host = "localhost";
-    final static private String user = "root";
-    final static private String passwd = "toor";
+    final static private String host = "10.101.208.15";
+    final static private String user = "Teilnehmer";
+    final static private String passwd = "Teilnehmer";
 
     public int getId() {
         return id;
