@@ -1,22 +1,15 @@
 package mypackage;
 
-import jdk.internal.net.http.common.Utils.*;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import static jdk.internal.net.http.common.Utils.close;
-
-//import static jdk.internal.net.http.common.Utils.*;
-
-//import static jdk.internal.net.http.common.Utils.close;
-
 
 public class PotentialAnswer {
-    private static int id; // PK
-    private static String content; // ein Antworttext zu einer Frage(Karte)
-    private static boolean correct; // in db 1 für true
-    private static int card_id; // FK
+    private int id; // PK
+    private String content; // ein Antworttext zu einer Frage(Karte)
+    private boolean correct; // in db 1 für true
+    private int card_id; // FK
 
     private static Connection connect = null;
     private static Statement statement = null;
@@ -43,9 +36,6 @@ public class PotentialAnswer {
         return card_id;
     }
 
-    /*public PotentialAnswer(int id) {
-
-    }*/
 
     public PotentialAnswer(int id, String content, boolean correct, int card_id) {
         this.id = id;
@@ -54,16 +44,11 @@ public class PotentialAnswer {
         this.card_id = card_id;
     }
 
-    /*
-     *       card_id muss - wenn es die Klasse card gibt - durch ein card-Objekt ersetzt werden
-     *       und im sql-statement ist card_id durch cardObjekt->getId() zu ersetzen.
-     *       In der Klasse card brauchen wir Methode loadPotentialAnswers(this);
-     *       cardObjekt.loadPotentialAnswers(al); soll dann einkommentiert werden
-     */
 
     public static void loadPotentialAnswersToCard(Card cardObject) throws Exception {
-        ArrayList<PotentialAnswer> al = new ArrayList<>();
+        ArrayList<PotentialAnswer> answerList = new ArrayList<>();
         try {
+            //connection to database
             Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.
                     getConnection("jdbc:mysql://" + host + "/zettelkasten?" +
@@ -72,13 +57,14 @@ public class PotentialAnswer {
             String dummy = "SELECT * FROM answer WHERE question_id=" + cardObject;
             resultSet = statement.executeQuery("SELECT * FROM answer WHERE question_id=" + cardObject.getId());
             while (resultSet.next()) {
-                id = resultSet.getInt("id");
-                content = resultSet.getString("content");
-                correct = resultSet.getBoolean("is_proper_answer");
-                card_id = resultSet.getInt("question_id");
-                al.add(new PotentialAnswer(id, content, correct, card_id));
+                int paId = resultSet.getInt("id");
+                String paContent = resultSet.getString("content");
+                boolean paCorrect = resultSet.getBoolean("is_proper_answer");
+                int paCardId = resultSet.getInt("question_id");
+                //add potential answer objects to ArrayList
+                answerList.add(new PotentialAnswer(paId, paContent, paCorrect, paCardId));
             }
-            Card.setPotentialAnswers(al);
+            Card.setPotentialAnswers(answerList);
 
         } catch (Exception e) {
             throw e;
@@ -86,6 +72,8 @@ public class PotentialAnswer {
             close();
         }
     }
+
+
     private static void close() {
         try {
             if (resultSet != null) {

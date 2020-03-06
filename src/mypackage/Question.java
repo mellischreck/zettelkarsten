@@ -8,8 +8,8 @@ import java.sql.PreparedStatement;
 public class Question {
 
     private int id;
-    private static String content;
-    private int card_id;
+    private String content;
+    private int cardId;//should be same as id?
 
     private static Connection connect = null;
     private static Statement statement = null;
@@ -28,8 +28,8 @@ public class Question {
         return content;
     }
 
-    public int getCard_id(){
-        return card_id;
+    public int getCardId() {
+        return cardId;
     }
 
 
@@ -38,17 +38,10 @@ public class Question {
         this.content = content;
     }
 
-    /*public Question(int id){
-        this.id = id;
-    }
 
-    public String toString() { //testing
-        return this.content;
-    }*/
-
-
-    public static void readQuestionContent(int id) throws Exception {
+    public static void loadQuestionToCard(int id) throws Exception {
         try {
+            //connection to database
             Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.
                     getConnection("jdbc:mysql://" + host + "/zettelkasten?" +
@@ -58,8 +51,9 @@ public class Question {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             while ((resultSet.next())) {
-                content = resultSet.getString("content");
-                Question question = new Question(id, content);
+                String contentResult = resultSet.getString("content");
+                //create question object with given id and content from db
+                Question question = new Question(id, contentResult);
                 Card.setQuestion(question);
             }
         } catch (Exception e) {
@@ -68,6 +62,7 @@ public class Question {
             close();
         }
     }
+
 
     private static void close() {
         try {

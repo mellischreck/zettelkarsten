@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Card {
 
-    private static ArrayList<PotentialAnswer> pa;
+    private static ArrayList<PotentialAnswer> potAns = new ArrayList<>();
     private static Question questionObject;
     private int id;
-    private int learnBox_id;
-    private String topic;
+    private int learnBox_id;//used later
+    private String topic;//used later
 
 
     public int getLearnBox_id() {
@@ -23,36 +23,22 @@ public class Card {
         return id;
     }
 
-    /*public Card() {
-
-    }
-
-    public Card(Card cardObject) {
-        this.id = cardObject.id;
-    }*/
-
-
-    public Card(int id, int learnBox_id, String topic) {
-        this.id = id;
-        this.learnBox_id = learnBox_id;
-        this.topic = topic;
-    }
 
     public Card(int id) throws Exception {
         this.id = id;
 
-        Question.readQuestionContent(this.id);
-
-        PotentialAnswer.loadPotentialAnswersToCard(this);
-
+        Question.loadQuestionToCard(this.id); //wants question obejct with id
+        PotentialAnswer.loadPotentialAnswersToCard(this); //wants ArrayList with potentiel answers with empty card
     }
 
     public static void setPotentialAnswers(ArrayList<PotentialAnswer> al) {
-        pa = al;
+        potAns = al;
+        //class card now has its own ArrayList with potential answers
     }
 
     public static void setQuestion(Question question) {
         questionObject = question;
+        //class card has now its own questionObject
     }
 
 
