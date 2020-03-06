@@ -7,15 +7,15 @@ import static jdk.internal.net.http.common.Utils.close;
 
 
 public class PotentialAnswer {
-    private int id; // PK
-    private String content; // ein Antworttext zu einer Frage(Karte)
-    private boolean correct; // in db 1 für true
-    private Card cardObject; // FK
+    private static int id; // PK
+    private static String content; // ein Antworttext zu einer Frage(Karte)
+    private static boolean correct; // in db 1 für true
+    private static Card cardObject; // FK
 
-    private Connection connect = null;
-    private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
-    private ResultSet resultSet = null;
+    private static Connection connect = null;
+    private static Statement statement = null;
+    private static PreparedStatement preparedStatement = null;
+    private static ResultSet resultSet = null;
 
     final static private String host = "localhost";
     final static private String user = "root";
@@ -55,7 +55,8 @@ public class PotentialAnswer {
      *       cardObjekt.loadPotentialAnswers(al); soll dann einkommentiert werden
      */
 
-    public void loadPotentialAnswersToCard(Card cardObject) throws Exception {
+
+    public static void loadPotentialAnswersToCard(Card cardObject) throws Exception {
         ArrayList<PotentialAnswer> al = new ArrayList<>();
         try {
             // This will load the MySQL driver, each DB has its own driver
@@ -79,7 +80,7 @@ public class PotentialAnswer {
                 //cardObject = resultSet.getInt("question_id");------------------------------------Lösung bitte
                 al.add(new PotentialAnswer(id, content, correct, cardObject));
             }
-            cardObject.setPotentialAnswers(al);
+            // cardObjekt.loadPotentialAnswers(al);
 
         } catch (Exception e) {
             throw e;
@@ -87,5 +88,7 @@ public class PotentialAnswer {
             close();
         }
     }
-
 }
+
+
+

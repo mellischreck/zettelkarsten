@@ -8,17 +8,18 @@ import java.sql.PreparedStatement;
 public class Question {
 
     private int id;
-    private String content;
+    private static String content;
+    private int card_id;
 
 
-    private Connection connect = null;
-    private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
-    private ResultSet resultSet = null;
+    private static Connection connect = null;
+    private static Statement statement = null;
+    private static PreparedStatement preparedStatement = null;
+    private static ResultSet resultSet = null;
 
-    final private String host = "10.101.208.15";
-    final private String user = "Teilnehmer";
-    final private String passwd = "Teilnehmer";
+    final private static String host = "10.101.208.15";
+    final private static String user = "Teilnehmer";
+    final private static String passwd = "Teilnehmer";
 
     public int getId() {
         return id;
@@ -27,6 +28,7 @@ public class Question {
     public String getContent() {
         return content;
     }
+
 
     public Question(int id, String content) throws Exception {
         this.id = id;
@@ -37,12 +39,15 @@ public class Question {
         this.id = id;
     }
 
-    public void readQuestionContent(int id) throws Exception {
+    public static void readQuestionContent(int id) throws Exception {
         try {
+
             Class.forName("com.mysql.jdbc.Driver");
+
             connect = DriverManager.
                     getConnection("jdbc:mysql://" + host + "/zettelkasten?" +
                             "user=" + user + "&password=" + passwd);
+
             preparedStatement = connect
                     .prepareStatement("SELECT content FROM question WHERE id = ?");
             preparedStatement.setInt(1, id);
@@ -50,9 +55,6 @@ public class Question {
             while ((resultSet.next())) {
                 content = resultSet.getString("content");
             }
-            Question question = new Question(id, content);
-            Card cardObject = new Card(id);
-            cardObject.setQuestion(question);
         } catch (Exception e) {
             throw e;
         } finally {
@@ -64,8 +66,7 @@ public class Question {
         return this.content;
     }
 
-
-    private void close() {
+    private static void close() {
         try {
             if (resultSet != null) {
                 resultSet.close();
@@ -79,6 +80,9 @@ public class Question {
                 connect.close();
             }
         } catch (Exception e) {
+
         }
     }
+
+
 }

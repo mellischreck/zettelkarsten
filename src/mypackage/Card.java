@@ -33,12 +33,14 @@ public class Card {
         this.topic = topic;
     }
 
-    public Card(Card cardObject) {
-        this.id = cardObject.id;
-    }
 
     public Card(int id) throws Exception {
         this.id = id;
+
+        //readQuestionContent(this.id);
+
+        //loadPotentialAnswersToCard(Card cardObject);
+
     }
 
     public void setPotentialAnswers(ArrayList<PotentialAnswer> al) {
@@ -49,12 +51,9 @@ public class Card {
         this.question = question;
     }
 
-    public void loadCard(int id) throws Exception {
-
+    public Card(Card cardObject) {
+        this.id = cardObject.id;
     }
 
-    private void readCard() {
-
-    }
 
 }
