@@ -23,7 +23,6 @@ public class Card {
         return id;
     }
 
-
     public Card(int id) throws Exception {
         this.id = id;
 

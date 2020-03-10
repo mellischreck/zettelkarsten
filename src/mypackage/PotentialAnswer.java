@@ -16,9 +16,9 @@ public class PotentialAnswer {
     private static PreparedStatement preparedStatement = null;
     private static ResultSet resultSet = null;
 
-    final static private String host = "10.101.208.15";
+    /*final static private String host = "10.101.208.15";
     final static private String user = "Teilnehmer";
-    final static private String passwd = "Teilnehmer";
+    final static private String passwd = "Teilnehmer";*/
 
     public int getId() {
         return id;
@@ -49,10 +49,12 @@ public class PotentialAnswer {
         ArrayList<PotentialAnswer> answerList = new ArrayList<>();
         try {
             //connection to database
-            Class.forName("com.mysql.jdbc.Driver");
+
+            /*Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.
                     getConnection("jdbc:mysql://" + host + "/zettelkasten?" +
-                            "user=" + user + "&password=" + passwd);
+                            "user=" + user + "&password=" + passwd);*/
+
             statement = connect.createStatement();
             String dummy = "SELECT * FROM answer WHERE question_id=" + cardObject;
             resultSet = statement.executeQuery("SELECT * FROM answer WHERE question_id=" + cardObject.getId());

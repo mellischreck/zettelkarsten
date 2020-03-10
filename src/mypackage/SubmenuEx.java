@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class SubmenuEx extends JFrame {
 
@@ -112,6 +113,11 @@ public class SubmenuEx extends JFrame {
 
             var ex = new SubmenuEx();
             ex.setVisible(true);
+            try {
+                DB.connect();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
 
         });

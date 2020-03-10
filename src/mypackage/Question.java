@@ -16,9 +16,9 @@ public class Question {
     private static PreparedStatement preparedStatement = null;
     private static ResultSet resultSet = null;
 
-    final private static String host = "10.101.208.15";
+    /*final private static String host = "10.101.208.15";
     final private static String user = "Teilnehmer";
-    final private static String passwd = "Teilnehmer";
+    final private static String passwd = "Teilnehmer";*/
 
     public int getId() {
         return id;
@@ -41,11 +41,13 @@ public class Question {
 
     public static void loadQuestionToCard(int id) throws Exception {
         try {
-            //connection to database
-            Class.forName("com.mysql.jdbc.Driver");
+
+            /*Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.
                     getConnection("jdbc:mysql://" + host + "/zettelkasten?" +
-                            "user=" + user + "&password=" + passwd);
+                            "user=" + user + "&password=" + passwd);*/
+
+
             preparedStatement = connect
                     .prepareStatement("SELECT content FROM question WHERE id = ?");
             preparedStatement.setInt(1, id);
