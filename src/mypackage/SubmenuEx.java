@@ -113,12 +113,6 @@ public class SubmenuEx extends JFrame {
 
             var ex = new SubmenuEx();
             ex.setVisible(true);
-            try {
-                DB.connect();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
 
         });
     }
