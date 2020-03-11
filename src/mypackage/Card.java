@@ -21,13 +21,11 @@ public class Card {
         final private String user = "Teilnehmer";
         final private String passwd = "Teilnehmer";
 
-
-
+        
         public Card(int Frage_id){
-
         this.card_Id=Frage_id;
-        this.Antwortliste=getAntwortObjektenvonFrageid(Frage_id);
-        this.frage=getFrageObjektvonfrageID(Frage_id);
+        this.Antwortliste= getAnswerObjectFromQuestionId(Frage_id);
+        this.frage= getQuestionObjectFromQuestionID(Frage_id);
 
         }
     public int getId() {
@@ -42,7 +40,7 @@ public class Card {
         return Antwortliste;
     }
 
-    public  Object getFrageObjektvonfrageID(int frage_id) {
+    public  Object getQuestionObjectFromQuestionID(int frage_id) {
         String content = "";
         int question_id=frage_id;
         Object Frage=null;
@@ -83,7 +81,7 @@ public class Card {
         return Frage;
     }
 
-    public List<Object> getAntwortObjektenvonFrageid(int frage_id) {
+    public List<Object> getAnswerObjectFromQuestionId(int frage_id) {
         List<Object> Antwortlist = new ArrayList<>();
         String content;
         int AntwortidDatenbank;
