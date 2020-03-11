@@ -39,7 +39,7 @@ public class PotentialAnswer {
         this.belongtoWhichquestion = question_id;
         this.belongtoWhichCard=question_id;
     }
-
+    //this code is to display object eigensachaften as String. Else we get to seee only object reference.TODO how to create A,B,C,D for each answers
     @Override
     public String toString() {
         return ("Antwortmöglichkeit: "+getContent()+"\n");
