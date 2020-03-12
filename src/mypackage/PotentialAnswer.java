@@ -1,19 +1,24 @@
 package mypackage;
 
 
+import java.sql.*;
 import java.util.ArrayList;
 
 
 public class PotentialAnswer {
-    private int DatenbankId; // PK
+    private int id; // PK
     private String content; // ein Antworttext zu einer Frage(Karte)
     private boolean correct; // in db 1 für true
-    private int belongtoWhichquestion; // FK
-    private int belongtoWhichCard;
+    private int card_id; // FK
+
+    private static Connection connect = null;
+    private static Statement statement = null;
+    private static PreparedStatement preparedStatement = null;
+    private static ResultSet resultSet = null;
 
 
     public int getId() {
-        return DatenbankId;
+        return id;
     }
 
     public String getContent() {
@@ -24,45 +29,71 @@ public class PotentialAnswer {
         return correct;
     }
 
-    public int getwhichquestion() {
-        return belongtoWhichquestion;
-    }
-    public int getwhichcard_id() {
-        return belongtoWhichCard;
+    public int card_id() {
+        return card_id;
     }
 
 
-    public PotentialAnswer(int id, String content, boolean correct, int question_id) {
-        this.DatenbankId = id;
+    public PotentialAnswer(int id, String content, boolean correct, int card_id) {
+        this.id = id;
         this.content = content;
         this.correct = correct;
-        this.belongtoWhichquestion = question_id;
-        this.belongtoWhichCard=question_id;
+        this.card_id = card_id;
     }
-    //this code is to display object eigensachaften as String. Else we get to seee only object reference.TODO how to create A,B,C,D for each answers
+
     @Override
     public String toString() {
-        return ("Antwortmöglichkeit: "+getContent()+"\n");
+        return "PotentialAnswer: " +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", correct=" + correct +
+                ", card_id=" + card_id;
     }
 
-    //call this from submit button oncall function from Oca_Ansicht-  b.addActionListener(new ActionListener() -give answer id/object/answer list as parameter
-    // see how to deal with it and how it works - this code below Card.setPotentialAnswers(answerList);
-
-   /* public static void loadPotentialAnswersToCard(Card cardObject)  {
+    public static void loadPotentialAnswersToCard(Card cardObject) throws Exception {
         ArrayList<PotentialAnswer> answerList = new ArrayList<>();
-
-
-
-             /*   int paId = resultSet.getInt("id");
+        try {
+            connect = DB.connect();
+            statement = connect.createStatement();
+            String dummy = "SELECT * FROM answer WHERE question_id=" + cardObject;
+            resultSet = statement.executeQuery("SELECT * FROM answer WHERE question_id=" + cardObject.getId());
+            while (resultSet.next()) {
+                int paId = resultSet.getInt("id");
                 String paContent = resultSet.getString("content");
                 boolean paCorrect = resultSet.getBoolean("is_proper_answer");
                 int paCardId = resultSet.getInt("question_id");
                 //add potential answer objects to ArrayList
                 answerList.add(new PotentialAnswer(paId, paContent, paCorrect, paCardId));
+            }
+            Card.setPotentialAnswers(answerList);
 
-           // Card.setPotentialAnswers(answerList);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            close();
+        }
+    }
 
-    }*/
+
+    private static void close() {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+
+            if (statement != null) {
+                statement.close();
+            }
+
+            if (connect != null) {
+                connect.close();
+            }
+        } catch (Exception e) {
+
+
+        }
+
+    }
 }
 
 

@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-//not sure if we need this class- Comment from Jeri- 11 März
+
 public class DB {
 
     private static final String filename = "db.config";

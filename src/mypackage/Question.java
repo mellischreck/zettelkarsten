@@ -1,13 +1,20 @@
 package mypackage;
 
 
+import java.sql.*;
+import java.sql.PreparedStatement;
+
+
 public class Question {
 
     private int id;
     private String content;
-    private int belongtoWhichCard;//should be same as id?
+    private int cardId;//should be same as id?
 
-
+    private static Connection connect = null;
+    private static Statement statement = null;
+    private static PreparedStatement preparedStatement = null;
+    private static ResultSet resultSet = null;
 
 
     public int getId() {
@@ -18,36 +25,62 @@ public class Question {
         return content;
     }
 
-    public int getWhichCard() {
-        return belongtoWhichCard;
+    public int getCardId() {
+        return cardId;
     }
 
 
-    public Question(String content, int id) throws Exception {
-
-        this.content = content;
+    public Question(int id, String content) throws Exception {
         this.id = id;
-        this.belongtoWhichCard=id;
+        this.content = content;
     }
-    //this code is to display object eigensachaften as String. Else we get to seee only object reference
+
     @Override
     public String toString() {
-        return ("(question nr:" + id +") " + content);
+        return "id=" + id +
+                ", cardId=" + cardId +
+                ", content=" + content
+                ;
     }
 
-    //call this from submit button oncall function from Oca_Ansicht-  b.addActionListener(new ActionListener() -give frage id as parameter
-    // see how to deal with it and how it works - this code below // Card.setQuestion(question);
-
-  /*  public static void loadQuestionToCard(int id) {
-
-               // String contentResult = ;
+    public static void loadQuestionToCard(int id) throws Exception {
+        try {
+            connect = DB.connect();
+            preparedStatement = connect
+                    .prepareStatement("SELECT content FROM question WHERE id = ?");
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            while ((resultSet.next())) {
+                String contentResult = resultSet.getString("content");
                 //create question object with given id and content from db
-              //  Question question = new Question(id, contentResult);
-               // Card.setQuestion(question);
-
+                Question question = new Question(id, contentResult);
+                Card.setQuestion(question);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            close();
+        }
     }
-*/
 
+
+    private static void close() {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+
+            if (statement != null) {
+                statement.close();
+            }
+
+            if (connect != null) {
+                connect.close();
+            }
+        } catch (Exception e) {
+
+        }
+    }
 
 
 }
